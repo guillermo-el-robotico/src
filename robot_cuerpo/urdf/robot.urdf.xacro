@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	
+    <!--  Colores -->
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0.08"/>
+	    <geometry>
+                <box size="0.48 0.31 0.16"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.08"/>
+            <geometry>
+                <box size="0.48 0.31 0.16"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--  Joint Base FootPrint - Base Link -->
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.10"/>
+    </joint>
+
+	<!-- Laser -->
+    <link name="laser">
+        <visual>
+            <origin xyz="0 0 0" rpy="3.14 0 0"/>
+            <geometry>
+                <cylinder radius="0.03" length="0.04"/>
+            </geometry>
+	    <material name="orange"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy= "3.14 0 0"/>
+            <geometry>
+                <cylinder radius="0.03" length="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+
+	<!--  Joint Laser-Base Link -->
+
+    <joint name="base_scan_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="laser"/>
+        <origin xyz="-0.06 0 0.16" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Rueda Derecha -->
+
+    <link name="right_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <geometry>
+                <cylinder radius="0.07" length="0.03"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <geometry>
+                <cylinder radius="0.07" length="0.03"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Joint con Rueda Derecha -->
+
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0.19 -0.20 -0.04" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- Rueda Izquierda -->
+
+    <link name="left_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="-1.57 0 0"/>
+            <geometry>
+                <cylinder radius="0.07" length="0.03"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="-1.57 0 0"/>
+            <geometry>
+                <cylinder radius="0.07" length="0.03"/>
+            </geometry>
+        </collision>
+    </link>
+
+	<!-- Joint con Rueda Izquierda -->
+
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="0.19 0.20 -0.04" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- Rueda Loca  -->
+
+    <link name="caster_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <geometry>
+                <sphere radius="0.07"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <geometry>
+                <sphere radius="0.07"/>
+            </geometry>
+        </collision>
+    </link>
+
+	<!-- Joint con Rueda Loca -->
+    <joint name="wheel_caster_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="caster_wheel_link"/>
+        <origin xyz="-0.19 0 -0.08"/>
+    </joint>
+
+</robot>
